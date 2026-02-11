@@ -1,114 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>DIY MIDI Controller</title>
-  <link rel="stylesheet" href="style1.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
+<main class="main">
+
+<!-- ================= HEADER ================= -->
 <header class="header">
   <nav class="nav">
-    <span class="logo">DIY PROJECT</span>
+    <div class="logo">DIY PROJECT</div>
+
     <div class="nav-links">
       <a href="#overview">About</a>
       <a href="#hardware">Hardware</a>
       <a href="#software">Software</a>
       <a href="#features">Features</a>
     </div>
+
     <button class="btn-primary">Get Started</button>
   </nav>
 </header>
+<section id="visualizer">
+  <h2>MIDI Visualizer</h2>
+  <canvas id="midiCanvas"></canvas>
+</section>
 
-<main class="container">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div>
-      <h1>Build Your Own <span class="accent">MIDI Controller</span></h1>
-      <p class="muted">
-        A 64-key USB MIDI controller using Raspberry Pi Pico and CircuitPython.
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-content">
+
+    <div class="hero-text">
+      <h1>
+        Build Your Own <span class="accent">MIDI Controller</span>
+      </h1>
+
+      <p>
+        A comprehensive guide to creating a functional MIDI keyboard controller
+        using Raspberry Pi Pico, CircuitPython, and keyboard matrix architecture.
       </p>
+
+      <div class="hero-buttons">
+        <a href="#hardware" class="btn-primary">Learn Hardware</a>
+        <a href="#software" class="btn-outline">View Code</a>
+      </div>
+
+      <div class="stats">
+        <div><strong>64</strong><span>Keys</span></div>
+        <div><strong>8×8</strong><span>Matrix</span></div>
+        <div><strong>DAW</strong><span>Compatible</span></div>
+      </div>
     </div>
-  </section>
 
-  <!-- SOFTWARE -->
-  <section id="software">
-    <h2>Software & Code</h2>
-
-    <!-- Tabs -->
-    <div class="tabs">
-      <button class="tab active" data-tab="overview">Key Concepts</button>
-      <button class="tab" data-tab="matrix">Matrix Scanning</button>
-      <button class="tab" data-tab="midi">MIDI Output</button>
+    <div class="hero-card">
+      <div><span>Project Type</span><strong>Educational Electronics</strong></div>
+      <div><span>Microcontroller</span><strong>Raspberry Pi Pico</strong></div>
+      <div><span>Programming</span><strong>CircuitPython</strong></div>
+      <div><span>Interface</span><strong>USB MIDI</strong></div>
     </div>
 
-    <!-- Tab Content -->
-    <div class="tab-content">
+  </div>
+</section>
 
-      <div class="content active" data-content="overview">
-        <code>
-import board<br>
-import usb_midi<br>
-from adafruit_midi import MIDI<br>
-from adafruit_midi.note_on import NoteOn<br>
-from adafruit_midi.note_off import NoteOff<br><br>
-FIRST_NOTE = 36<br>
+<!-- ================= OVERVIEW ================= -->
+<section id="overview" class="section">
+  <div class="card large">
+    <h2>What is a MIDI Controller?</h2>
+
+    <p>
+      A MIDI (Musical Instrument Digital Interface) keyboard is a controller
+      that allows you to play and record music on your computer's DAW
+      or other MIDI-compatible devices.
+    </p>
+
+    <p>
+      This project demonstrates how to build a fully functional 64-key
+      MIDI controller from scratch using open-source CircuitPython.
+    </p>
+
+    <div class="grid-2">
+      <div>
+        <h3>Keyboard Matrix Design</h3>
+        <p>Efficient 8×8 scanning with diode protection.</p>
+      </div>
+      <div>
+        <h3>USB MIDI Protocol</h3>
+        <p>Compatible with FL Studio, Ableton, Logic Pro.</p>
+      </div>
+      <div>
+        <h3>CircuitPython Code</h3>
+        <p>Readable and expandable Python implementation.</p>
+      </div>
+      <div>
+        <h3>Open Source</h3>
+        <p>Fully documented and customizable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HARDWARE ================= -->
+<section id="hardware" class="section">
+
+  <h2>Hardware Components</h2>
+
+  <div class="grid-3">
+
+    <div class="card">
+      <h3>Microcontroller</h3>
+      <p class="accent">Raspberry Pi Pico</p>
+      <p>RP2040, dual ARM Cortex-M0+, 264KB RAM</p>
+    </div>
+
+    <div class="card">
+      <h3>Keys & Structure</h3>
+      <p class="accent">Old Piano PCB</p>
+      <p>64-key matrix from repurposed piano</p>
+    </div>
+
+    <div class="card">
+      <h3>Power & Data</h3>
+      <p class="accent">USB Cable</p>
+      <p>USB for power and MIDI data</p>
+    </div>
+
+    <div class="card">
+      <h3>Diodes</h3>
+      <p class="accent">IN4148 Diodes</p>
+      <p>Prevents ghosting in matrix</p>
+    </div>
+
+    <div class="card">
+      <h3>Connections</h3>
+      <p class="accent">Jumper Wires</p>
+      <p>Connect rows and columns</p>
+    </div>
+
+    <div class="card">
+      <h3>Enclosure</h3>
+      <p class="accent">Digital Piano Cabinet</p>
+      <p>Professional housing</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= SOFTWARE ================= -->
+<section id="software" class="section">
+
+  <h2>Software & Code</h2>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" data-tab="overview">Key Concepts</button>
+    <button class="tab" data-tab="matrix">Matrix Scanning</button>
+    <button class="tab" data-tab="midi">MIDI Output</button>
+  </div>
+
+  <div class="tab-panel">
+
+    <!-- OVERVIEW TAB -->
+    <div class="tab-content active" data-content="overview">
+<pre>
+import board
+import usb_midi
+from adafruit_midi import MIDI
+from adafruit_midi.note_on import NoteOn
+from adafruit_midi.note_off import NoteOff
+
+FIRST_NOTE = 36
 DEBOUNCE_DELAY = 0.01
-        </code>
-      </div>
-
-      <div class="content" data-content="matrix">
-        <code>
-def scan_matrix():<br>
-&nbsp;&nbsp;pressed = []<br>
-&nbsp;&nbsp;for r, row in enumerate(row_pins):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;row.value = True<br>
-&nbsp;&nbsp;&nbsp;&nbsp;for c, col in enumerate(col_pins):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if col.value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pressed.append(r * 8 + c)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;row.value = False<br>
-&nbsp;&nbsp;return pressed
-        </code>
-      </div>
-
-      <div class="content" data-content="midi">
-        <code>
-for i in range(64):<br>
-&nbsp;&nbsp;note = FIRST_NOTE + i<br>
-&nbsp;&nbsp;if now and not prev:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;midi.send(NoteOn(note, 100))<br>
-&nbsp;&nbsp;elif not now and prev:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;midi.send(NoteOff(note, 0))
-        </code>
-      </div>
-
+</pre>
     </div>
-  </section>
 
-</main>
+    <!-- MATRIX TAB -->
+    <div class="tab-content" data-content="matrix">
+<pre>
+def scan_matrix():
+    pressed = []
+    for r, row in enumerate(row_pins):
+        row.value = True
+        time.sleep(0.0001)
+        for c, col in enumerate(col_pins):
+            if col.value:
+                pressed.append(r * 8 + c)
+        row.value = False
+    return pressed
+</pre>
+    </div>
+
+    <!-- MIDI TAB -->
+    <div class="tab-content" data-content="midi">
+<pre>
+for i in range(64):
+    note = FIRST_NOTE + i
+    now = (i in current)
+    prev = key_states[i]
+
+    if now and not prev:
+        midi.send(NoteOn(note, 100))
+        key_states[i] = True
+    elif not now and prev:
+        midi.send(NoteOff(note, 0))
+        key_states[i] = False
+</pre>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section id="features" class="section">
+
+  <h2>Features & Capabilities</h2>
+
+  <div class="grid-3">
+    <div class="card">DAW Compatible</div>
+    <div class="card">Low Latency</div>
+    <div class="card">Customizable</div>
+    <div class="card">Record & Perform</div>
+    <div class="card">Unlimited Sounds</div>
+    <div class="card">Educational</div>
+  </div>
+
+</section>
 
 <footer class="footer">
   © 2024 DIY MIDI Controller Project
 </footer>
 
+</main>
+
 <script>
-  const tabs = document.querySelectorAll('.tab');
-  const contents = document.querySelectorAll('.content');
+const canvas = document.getElementById("midiCanvas");
+const ctx = canvas.getContext("2d");
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      contents.forEach(c => c.classList.remove('active'));
+let bars = [];
+const BAR_COUNT = 32;
 
-      tab.classList.add('active');
-      document
-        .querySelector(`[data-content="${tab.dataset.tab}"]`)
-        .classList.add('active');
-    });
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+// Initialize bars
+for (let i = 0; i < BAR_COUNT; i++) {
+  bars.push({
+    height: 0,
+    velocity: 0
   });
+}
+
+// Simulate MIDI note trigger
+function triggerNote(index, velocity = Math.random()) {
+  if (bars[index]) {
+    bars[index].velocity = velocity;
+    bars[index].height = velocity * canvas.height;
+  }
+}
+
+// Animate bars
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const barWidth = canvas.width / BAR_COUNT;
+
+  bars.forEach((bar, i) => {
+    // Smooth decay
+    bar.height *= 0.92;
+
+    const x = i * barWidth;
+    const y = canvas.height - bar.height;
+
+    const gradient = ctx.createLinearGradient(0, y, 0, canvas.height);
+    gradient.addColorStop(0, "#8b5cf6");
+    gradient.addColorStop(1, "#4c1d95");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(x + 4, y, barWidth - 8, bar.height);
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Simulate random MIDI input (remove when connecting real MIDI)
+setInterval(() => {
+  const randomIndex = Math.floor(Math.random() * BAR_COUNT);
+  triggerNote(randomIndex, Math.random());
+}, 150);
+const tabs = document.querySelectorAll('.tab');
+const contents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    contents.forEach(c => c.classList.remove('active'));
+
+    tab.classList.add('active');
+    document.querySelector(
+      `[data-content="${tab.dataset.tab}"]`
+    ).classList.add('active');
+  });
+});
 </script>
 
 </body>
