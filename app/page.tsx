@@ -53,6 +53,7 @@ export default function Home() {
         }
 
         function animate() {
+          if (!ctx) return
           ctx.clearRect(0, 0, canvas.width, canvas.height)
 
           const barWidth = canvas.width / BAR_COUNT
