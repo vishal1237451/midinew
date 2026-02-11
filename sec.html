@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DIY MIDI Controller</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: '#0f0f14',
+            foreground: '#ffffff',
+            card: '#14141c',
+            border: '#262635',
+            accent: '#8b5cf6',
+            'accent-foreground': '#ffffff',
+            muted: '#a1a1aa'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @keyframes keyPress {
+      0%, 100% { transform: scaleY(1); opacity: 0.2; }
+      50% { transform: scaleY(1.2); opacity: 0.5; }
+    }
+  </style>
+</head>
+
+<body class="bg-background text-foreground">
+
+<!-- ================= HEADER ================= -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
+  <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <span class="text-xl font-bold">DIY PROJECT</span>
+
+    <div class="hidden md:flex gap-8">
+      <a href="#overview" class="hover:text-accent">About</a>
+      <a href="#hardware" class="hover:text-accent">Hardware</a>
+      <a href="#software" class="hover:text-accent">Software</a>
+      <a href="#features" class="hover:text-accent">Features</a>
+    </div>
+
+    <button class="px-4 py-2 rounded-lg bg-accent text-white">
+      Get Started
+    </button>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="pt-32 pb-16 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+
+  <div class="space-y-6">
+    <h1 class="text-5xl font-bold">
+      Build Your Own <span class="text-accent">MIDI Controller</span>
+    </h1>
+    <p class="text-xl text-muted">
+      Create a 64-key USB MIDI keyboard using Raspberry Pi Pico and CircuitPython.
+    </p>
+
+    <div class="flex gap-4">
+      <a href="#hardware" class="px-6 py-3 bg-accent rounded-lg text-white">Learn Hardware</a>
+      <a href="#software" class="px-6 py-3 border border-accent text-accent rounded-lg">View Code</a>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-border">
+      <div><p class="text-2xl font-bold">64</p><p class="text-sm text-muted">Keys</p></div>
+      <div><p class="text-2xl font-bold">8×8</p><p class="text-sm text-muted">Matrix</p></div>
+      <div><p class="text-2xl font-bold">DAW</p><p class="text-sm text-muted">Compatible</p></div>
+    </div>
+  </div>
+
+  <!-- Keyboard Visual -->
+  <div class="relative">
+    <div class="absolute inset-0 bg-accent/20 blur-2xl rounded-2xl"></div>
+    <div class="relative bg-card border border-border rounded-2xl p-8 space-y-4">
+      <p><span class="text-muted">Microcontroller:</span> Raspberry Pi Pico</p>
+      <p><span class="text-muted">Language:</span> CircuitPython</p>
+      <p><span class="text-muted">Interface:</span> USB MIDI</p>
+    </div>
+  </div>
+</section>
+<div class="flex border-b border-border">
+  <button data-tab="overview" onclick="setActiveTab('overview')" class="px-6 py-3 text-accent border-b-2 border-accent">
+    Key Concepts
+  </button>
+  <button data-tab="matrix" onclick="setActiveTab('matrix')" class="px-6 py-3 text-muted-foreground">
+    Matrix Scanning
+  </button>
+  <button data-tab="midi" onclick="setActiveTab('midi')" class="px-6 py-3 text-muted-foreground">
+    MIDI Output
+  </button>
+</div>
+<script>
+  let activeTab = 'overview';
+
+  function setActiveTab(tab) {
+    activeTab = tab;
+
+    document.querySelectorAll('[data-tab]').forEach(btn => {
+      btn.classList.toggle(
+        'text-accent',
+        btn.dataset.tab === tab
+      );
+      btn.classList.toggle(
+        'border-accent',
+        btn.dataset.tab === tab
+      );
+    });
+
+    document.querySelectorAll('[data-content]').forEach(section => {
+      section.style.display =
+        section.dataset.content === tab ? 'block' : 'none';
+    });
+  }
+</script>
+
+
+
+<!-- ================= OVERVIEW ================= -->
+<section id="overview" class="py-16 max-w-7xl mx-auto px-6">
+  <div class="bg-card border border-border rounded-2xl p-10">
+    <h2 class="text-3xl font-bold mb-6">What is a MIDI Controller?</h2>
+    <p class="text-muted mb-4">
+      A MIDI controller translates physical key presses into digital musical messages for DAWs.
+    </p>
+    <p class="text-muted">
+      This project builds a full 64-key keyboard using matrix scanning and USB MIDI.
+    </p>
+  </div>
+</section>
+
+<!-- ================= HARDWARE ================= -->
+<section id="hardware" class="py-16 max-w-7xl mx-auto px-6">
+  <h2 class="text-3xl font-bold mb-8">Hardware Components</h2>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="bg-card border border-border p-6 rounded-xl">
+      <h3 class="font-semibold">Raspberry Pi Pico</h3>
+      <p class="text-muted">RP2040 Microcontroller</p>
+    </div>
+    <div class="bg-card border border-border p-6 rounded-xl">
+      <h3 class="font-semibold">Keyboard Matrix</h3>
+      <p class="text-muted">8×8 matrix with diodes</p>
+    </div>
+    <div class="bg-card border border-border p-6 rounded-xl">
+      <h3 class="font-semibold">USB Cable</h3>
+      <p class="text-muted">Power & MIDI data</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOFTWARE ================= -->
+<section id="software" class="py-16 max-w-7xl mx-auto px-6">
+  <h2 class="text-3xl font-bold mb-8">Software & Code</h2>
+
+  <!-- Tabs -->
+  <div class="border border-border rounded-xl overflow-hidden">
+    <div class="flex border-b border-border">
+      <button class="tab-btn px-6 py-3 text-accent border-b-2 border-accent" data-tab="overview">Key Concepts</button>
+      <button class="tab-btn px-6 py-3 text-muted" data-tab="matrix">Matrix</button>
+      <button class="tab-btn px-6 py-3 text-muted" data-tab="midi">MIDI</button>
+    </div>
+
+    <div class="p-6 font-mono text-sm bg-card/50">
+
+      <div class="tab-content" id="overview-tab">
+        <p>import usb_midi</p>
+        <p>from adafruit_midi import MIDI</p>
+        <p class="mt-2">FIRST_NOTE = 36</p>
+      </div>
+
+      <div class="tab-content hidden" id="matrix-tab">
+        <p>for row in rows:</p>
+        <p class="ml-4">scan columns</p>
+      </div>
+
+      <div class="tab-content hidden" id="midi-tab">
+        <p>midi.send(NoteOn(note, 100))</p>
+        <p>midi.send(NoteOff(note, 0))</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section id="features" class="py-16 max-w-7xl mx-auto px-6">
+  <h2 class="text-3xl font-bold mb-8">Features</h2>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="bg-card border border-border p-6 rounded-xl">DAW Compatible</div>
+    <div class="bg-card border border-border p-6 rounded-xl">Low Latency</div>
+    <div class="bg-card border border-border p-6 rounded-xl">Fully Customizable</div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-border py-8 text-center text-muted">
+  © 2024 DIY MIDI Controller Project
+</footer>
+
+<!-- ================= JS ================= -->
+<script>
+  const buttons = document.querySelectorAll('.tab-btn');
+  const tabs = document.querySelectorAll('.tab-content');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('text-accent','border-accent'));
+      tabs.forEach(t => t.classList.add('hidden'));
+
+      btn.classList.add('text-accent','border-accent');
+      document.getElementById(btn.dataset.tab + '-tab').classList.remove('hidden');
+    });
+  });
+</script>
+
+</body>
+</html>
+

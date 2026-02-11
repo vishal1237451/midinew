@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DIY MIDI Controller</title>
+  <link rel="stylesheet" href="style1.css">
+</head>
+
+<body>
+
+<header class="header">
+  <nav class="nav">
+    <span class="logo">DIY PROJECT</span>
+    <div class="nav-links">
+      <a href="#overview">About</a>
+      <a href="#hardware">Hardware</a>
+      <a href="#software">Software</a>
+      <a href="#features">Features</a>
+    </div>
+    <button class="btn-primary">Get Started</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <h1>Build Your Own <span class="accent">MIDI Controller</span></h1>
+      <p class="muted">
+        A 64-key USB MIDI controller using Raspberry Pi Pico and CircuitPython.
+      </p>
+    </div>
+  </section>
+
+  <!-- SOFTWARE -->
+  <section id="software">
+    <h2>Software & Code</h2>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-tab="overview">Key Concepts</button>
+      <button class="tab" data-tab="matrix">Matrix Scanning</button>
+      <button class="tab" data-tab="midi">MIDI Output</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+
+      <div class="content active" data-content="overview">
+        <code>
+import board<br>
+import usb_midi<br>
+from adafruit_midi import MIDI<br>
+from adafruit_midi.note_on import NoteOn<br>
+from adafruit_midi.note_off import NoteOff<br><br>
+FIRST_NOTE = 36<br>
+DEBOUNCE_DELAY = 0.01
+        </code>
+      </div>
+
+      <div class="content" data-content="matrix">
+        <code>
+def scan_matrix():<br>
+&nbsp;&nbsp;pressed = []<br>
+&nbsp;&nbsp;for r, row in enumerate(row_pins):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;row.value = True<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for c, col in enumerate(col_pins):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if col.value:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pressed.append(r * 8 + c)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;row.value = False<br>
+&nbsp;&nbsp;return pressed
+        </code>
+      </div>
+
+      <div class="content" data-content="midi">
+        <code>
+for i in range(64):<br>
+&nbsp;&nbsp;note = FIRST_NOTE + i<br>
+&nbsp;&nbsp;if now and not prev:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;midi.send(NoteOn(note, 100))<br>
+&nbsp;&nbsp;elif not now and prev:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;midi.send(NoteOff(note, 0))
+        </code>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2024 DIY MIDI Controller Project
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+
+      tab.classList.add('active');
+      document
+        .querySelector(`[data-content="${tab.dataset.tab}"]`)
+        .classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
