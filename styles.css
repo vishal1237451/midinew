@@ -42,6 +42,7 @@ body{
   color:white;border:none;
   padding:10px 16px;border-radius:8px;
   cursor:pointer;text-decoration:none;
+  display:inline-block;white-space:nowrap;
 }
 
 .btn-outline{
@@ -49,6 +50,7 @@ body{
   color:var(--accent);
   padding:10px 16px;border-radius:8px;
   text-decoration:none;
+  display:inline-block;white-space:nowrap;
 }
 
 .section{margin:80px 0;}
@@ -57,10 +59,18 @@ body{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:40px;
-  align-items:center;
+  align-items:flex-start;
 }
 
-.hero h1{font-size:48px;margin-bottom:20px;}
+.hero-text{
+  display:flex;flex-direction:column;gap:20px;
+}
+
+.hero h1{font-size:48px;margin-bottom:0;}
+
+.hero-buttons{
+  display:flex;gap:15px;margin-top:10px;
+}
 
 .accent{color:var(--accent);}
 
